@@ -1,0 +1,69 @@
+section#kanban-list {
+    display: inline-block;
+    border: solid;    
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+section#kanban-list .colunas {
+    vertical-align: top;
+    min-width: 180px;
+    max-width: 220px;
+    min-height: 700px;
+    border: solid;   
+    margin: 0 auto;
+    padding: 0 30px;
+    text-align: center;
+}
+
+section#kanban-list .colunaHead{
+    border-bottom: solid;
+    overflow: hidden;
+}
+
+section#kanban-list article {
+    background: #FFF;
+    border: 1px solid #DDD;
+    margin-top: 30px;
+}
+
+section#kanban-list article header {
+    padding: 20px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+section#kanban-list article header .card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+section#kanban-list article header .card-info span {
+    font-size: 13px;
+}
+
+section#kanban-list article header .card-info span .title {
+    font-size: 11px;
+    color: #666;
+    margin-top: 3px;
+}
+
+section#kanban-list article header .card-info span .status {
+    font-size: 11px;
+    color: #666;
+    margin-top: 3px;
+}
+
+section#kanban-list article header .card-info span .duration {
+    font-size: 11px;
+    color: #666;
+    margin-top: 3px;
+}
+
+section#kanban-list article header .card-info span .points {
+    font-size: 11px;
+    color: #666;
+    margin-top: 3px;
+}
+
