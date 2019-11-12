@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import api from '../services/api';
+import Colunas from './Colunas';
 //import io from 'socket.io-client';
 //import Colunas from './Colunas.js';
+
 import './Kanban.css';
 
 class Kanban extends Component {
@@ -9,16 +11,19 @@ class Kanban extends Component {
     constructor(props){
         super(props);
         this.colunas = [
-            {id: 0, nome:"Backlog"},
-            {id: 1, nome:"A Fazer"},
-            {id: 2, nome:"FAzendo"},
-            {id: 3, nome:"Teste/Validações"},
-            {id: 4, nome:"Concluído"},
+            {id: 0, nome:"Backlog", className: "backlogColumn"},
+            {id: 1, nome:"A Fazer", className: "toDoColumn"},
+            {id: 2, nome:"Fazendo", className: "doingColumn"},
+            {id: 3, nome:"Teste/Validações", className: "validationColumn"},
+            {id: 4, nome:"Concluído", className: "doneColumn"},
         ];
+        //this.handleOnDragEnter = this.handleOnDragEnter.bind(this);
+		//this.handleOnDragEnd = this.handleOnDragEnd.bind(this);
     }
     
     state = {
-        kanban: []
+        cards: [],
+        draggedOverCol: 0,
     };
     
     async componentDidMount(){
@@ -26,7 +31,7 @@ class Kanban extends Component {
 
         const response = await api.get('cards');
 
-        this.setState({ kanban: response.data });
+        this.setState({ cards: response.data });
     }
 
     registerToSocket = () => {
@@ -45,112 +50,52 @@ class Kanban extends Component {
         })*/
     }
 
-    render() {
-        return(
-            <section id="kanban-list">
-                <div className="colunas">
-                    {
-                        this.colunas.map((coluna) => {
-                        return(
-                            <div id = {coluna.id} nome = {coluna.nome} key={coluna.id}>
-                                <header className="colunaHead">
-                                    <span>{coluna.nome}</span>
-                                </header> 
-                                <div className="card-info" 
-                                    onDragEnter = { this.handleOnDragEnter}
-                                    onDragEnd = {this.handleOnDragEnd}
-                                >
-                                    { 
-                                    this.state.kanban.map((card) => (    
-                                        (card.status === coluna.id) ? (
-                                            <article key={card._id}>
-                                                <span className="title">{card.title}</span>
-                                                <span className="duration"> Duração: {card.duration} horas</span>
-                                                <span className="points">Pontos: {card.points}</span>
-                                            </article>
-                                        ) : null
-                                    ))
-                                    }
-                                </div>
-                            </div>
-                        );
-                        }
-                    )
-                    }
-                </div>
-            </section>
-        );
-    }
-    /*constructor(props){
-        super(props);
-        this.colunas = [
-            {id: 0, nome:"Espera"},
-            {id: 1, nome:"Análise"},
-            {id: 2, nome:"Desenvolvimento"},
-            {id: 3, nome:"Teste"},
-            {id: 4, nome:"Concluído"},
-        ];
-    }
-
-    handleOnDragEnter(e, id){
+    handleOnDragEnter = (e, id) => {
         this.setState({draggedOverCol: id});
     }
+    
+    handleOnDragEnd = (e, cards) => {
+        var stateCopy = Object.assign({}, this.state.cards.find((item) => {
+            return item._id === cards._id
+        }));
+        var draggedOverCol = this.state.draggedOverCol;
+        console.log(this.state);
+        stateCopy.status = draggedOverCol;
+        var stateToSave = {
+            cards: Object.values(stateCopy),
+            draggedOverCol: draggedOverCol,
+        }
+        console.log(stateToSave);
+        //this.setState({cards: Object.values(stateCopy)});
 
-    handleOnDragEnd(e, cartao){
-        this.cartoes.find((item) => {
-            return item.id === cartao.id
-        }).idColuna = this.state.draggedOverCol;
-            this.setState({cartoes : this.cartoes});
+        /*this.state.cards.find((item) => {
+            return item._id === cards._id
+        }).status = this.state.draggedOverCol;
+        this.setState({ cards : this.state.cards});*/
+        //console.log(this.state, cards);
 
     }
-    alterarPopUp(){
-        this.setState({
-            popUpAberto: !this.state.popUpAberto
-    });}
 
-   salvarCartao(cartao){
-        this.setState({
-            popUpAberto: !this.state.popUpAberto
-    })
-        this.cartoes.push(this.cartao)
-    ;}
-    
- 
-    render(){
+    render() {
         return(
             <div className="kanban">
                 <div className="kanbanHead">
-                    <ul>
-                        <li><button className="button" onClick = {this.alterarPopUp.bind(this)}>Novo cartão</button></li>
-                        <li> <h1>Kanban Hiago Rubio</h1>      </li>
-                        {this.state.popUpAberto ? 
-                            <Popup
-                                text='Close Me'
-                                closePopup={this.alterarPopUp.bind(this)}
-                                salvarCartao={this.salvarCartao.bind(this)}
-                                cartoes={this.cartoes}
-                            />
-                            : null
-                        }
-                    </ul>                                  
-                </div>
-                <div className="colunas">
-                    {this.colunas.map((coluna) => {
-                        return(
-                            <Colunas id = {coluna.id} nome = {coluna.nome} key={coluna.id} cartoes={this.cartoes}
-                                onDragEnter = {this.handleOnDragEnter}
-                                onDragEnd = {this.handleOnDragEnd}
-                            /> 
-                        );
+                    {
+                        this.colunas.map((coluna) => {
+                            return(
+                                <Colunas id = {coluna.id} nome = {coluna.nome} key={coluna.id} cards = {this.state.cards}
+                                    onDragEnter = {this.handleOnDragEnter}
+                                    onDragEnd = {this.handleOnDragEnd}
+                                /> 
+                            );
                         }
                     )
                     }
-                                   
                 </div>
             </div>
-        )
-    }*/
-
+        );
+    }
+    
 }
 
 export default Kanban;

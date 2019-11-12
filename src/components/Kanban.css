@@ -1,69 +1,89 @@
-section#kanban-list {
-    display: inline-block;
-    border: solid;    
-    margin: 0 auto;
-    padding: 0 30px;
+/*
+    TODO: passar o css para cá e tirar do index.js
+*/
+
+/*
+    TODO: para tirar as bordas duplicadas do menu usar no first-child e last-child
+    https://forum.imasters.com.br/topic/546087-como-posicionar-a-borda-onde-eu-quero/
+*/
+
+body{
+    padding: 15px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
-section#kanban-list .colunas {
+h1{
+    font-size: 2em;
+    text-align: center;
+    margin-left: 200px;
+}
+
+ul {
+    list-style-type: none;
+}
+    
+ul li {
+    float: left;
+}
+    
+button{
+    width: 100px;
+    height: 50px;
+    margin: 5px;
+}
+
+.kanban{
+    display: inline-block;
+    border: solid;    
+    min-width: 900px;
+    min-height: 700px;
+}
+
+.kanbanHead{
+    border-bottom: solid;
+    height: 80px;
+
+}
+
+.coluna{
+    display: inline-block;
     vertical-align: top;
     min-width: 180px;
     max-width: 220px;
     min-height: 700px;
-    border: solid;   
-    margin: 0 auto;
-    padding: 0 30px;
     text-align: center;
+    border-right:solid;
 }
 
-section#kanban-list .colunaHead{
+.coluna:last-child{
+    border:none;
+}
+
+.colunaHead{
     border-bottom: solid;
     overflow: hidden;
 }
 
-section#kanban-list article {
-    background: #FFF;
-    border: 1px solid #DDD;
-    margin-top: 30px;
+.cartao{
+    display: inline-block;
+    border: solid;
+    margin: 1px;
+    min-width: 100px;
+    max-width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+    float: left;
+}
+.cartaoHead{
+    border-bottom: solid;
+    height: 50px;
+  
+}
+.cartaoHead h2{
+    font-size: 1em;
+    
 }
 
-section#kanban-list article header {
-    padding: 20px;
-
-    display: flex;
-    justify-content: space-between;
+.cartao p{
+    font-size: 0.6em;
 }
-
-section#kanban-list article header .card-info {
-    display: flex;
-    flex-direction: column;
-}
-
-section#kanban-list article header .card-info span {
-    font-size: 13px;
-}
-
-section#kanban-list article header .card-info span .title {
-    font-size: 11px;
-    color: #666;
-    margin-top: 3px;
-}
-
-section#kanban-list article header .card-info span .status {
-    font-size: 11px;
-    color: #666;
-    margin-top: 3px;
-}
-
-section#kanban-list article header .card-info span .duration {
-    font-size: 11px;
-    color: #666;
-    margin-top: 3px;
-}
-
-section#kanban-list article header .card-info span .points {
-    font-size: 11px;
-    color: #666;
-    margin-top: 3px;
-}
-
