@@ -11,11 +11,11 @@ class Kanban extends Component {
     constructor(props){
         super(props);
         this.colunas = [
-            {id: 0, nome:"Backlog", className: "backlogColumn"},
-            {id: 1, nome:"A Fazer", className: "toDoColumn"},
-            {id: 2, nome:"Fazendo", className: "doingColumn"},
-            {id: 3, nome:"Teste/Validações", className: "validationColumn"},
-            {id: 4, nome:"Concluído", className: "doneColumn"},
+            {id: 0, name:"Backlog", className: "backlogColumn"},
+            {id: 1, name:"A Fazer", className: "toDoColumn"},
+            {id: 2, name:"Fazendo", className: "doingColumn"},
+            {id: 3, name:"Validações", className: "validationColumn"},
+            {id: 4, name:"Concluído", className: "doneColumn"},
         ];
         //this.handleOnDragEnter = this.handleOnDragEnter.bind(this);
 		//this.handleOnDragEnd = this.handleOnDragEnd.bind(this);
@@ -83,7 +83,7 @@ class Kanban extends Component {
                     {
                         this.colunas.map((coluna) => {
                             return(
-                                <Colunas id = {coluna.id} nome = {coluna.nome} key={coluna.id} cards = {this.state.cards}
+                                <Colunas id = {coluna.id} name = {coluna.name} key={coluna.id} cards = {this.state.cards}
                                     onDragEnter = {this.handleOnDragEnter}
                                     onDragEnd = {this.handleOnDragEnd}
                                 /> 

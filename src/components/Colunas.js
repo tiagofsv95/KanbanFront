@@ -11,7 +11,7 @@ class Colunas extends Component {
             <div className="coluna"  
            onDragEnter={(e)=>this.props.onDragEnter(e, this.props.id)}>
                 <div className="colunaHead"> 
-                    <h2>{this.props.nome}</h2>
+                    <h2>{this.props.name}</h2>
                 </div>
                 {this.props.cards.map((cards) =>{
                     if(cards.status === this.props.id){
