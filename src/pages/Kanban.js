@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../services/api';
-import Colunas from './Colunas';
-//import io from 'socket.io-client';
-//import Colunas from './Colunas.js';
+import Colunas from '../components/Colunas';
+import io from 'socket.io-client';
 
 import './Kanban.css';
 
@@ -17,8 +17,7 @@ class Kanban extends Component {
             {id: 3, name:"Validações", className: "validationColumn"},
             {id: 4, name:"Concluído", className: "doneColumn"},
         ];
-        //this.handleOnDragEnter = this.handleOnDragEnter.bind(this);
-		//this.handleOnDragEnd = this.handleOnDragEnd.bind(this);
+     
     }
     
     state = {
@@ -29,25 +28,25 @@ class Kanban extends Component {
     async componentDidMount(){
         this.registerToSocket();
 
-        const response = await api.get('cards');
+        const response = await api.get('/cards');
 
         this.setState({ cards: response.data });
     }
 
     registerToSocket = () => {
-        //const socket = io('http://localhost:3333');
+        const socket = io('http://localhost:3333');
 
-        /*socket.on('post', newPost => {
-            this.setState({ feed: [newPost, ...this.state.feed] });
+        socket.on('post', newcard => {
+            this.setState({ cards: [newcard, ...this.state.cards] });
         })
         
-        socket.on('like', likedPost => {
+        socket.on('change', cardUpdate => {
             this.setState({
-                feed: this.state.feed.map(post =>
-                    post._id === likedPost._id ? likedPost : post
+                cards: this.state.cards.map(card =>
+                    card._id === cardUpdate._id ? cardUpdate : card
                 )
             })
-        })*/
+        });
     }
 
     handleOnDragEnter = (e, id) => {
@@ -58,28 +57,25 @@ class Kanban extends Component {
         var stateCopy = Object.assign({}, this.state.cards.find((item) => {
             return item._id === cards._id
         }));
-        var draggedOverCol = this.state.draggedOverCol;
-        console.log(this.state);
-        stateCopy.status = draggedOverCol;
-        var stateToSave = {
-            cards: Object.values(stateCopy),
-            draggedOverCol: draggedOverCol,
-        }
-        console.log(stateToSave);
-        //this.setState({cards: Object.values(stateCopy)});
-
-        /*this.state.cards.find((item) => {
-            return item._id === cards._id
-        }).status = this.state.draggedOverCol;
-        this.setState({ cards : this.state.cards});*/
-        //console.log(this.state, cards);
-
+        
+        api.put(`/cards/${stateCopy._id}/${this.state.draggedOverCol}`);
     }
 
     render() {
         return(
             <div className="kanban">
                 <div className="kanbanHead">
+                    <ul>
+                        <li>
+                            <Link to = "/new"> 
+                                <button className="button">Novo cartão</button>
+                            </Link>
+                        </li>
+                        <li> <h1>Simple Kanban</h1> </li>
+                    </ul>                                  
+                </div>
+                
+                <div className="colunas">
                     {
                         this.colunas.map((coluna) => {
                             return(

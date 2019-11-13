@@ -1,7 +1,7 @@
 import  React, { Component } from 'react';
 import Cards from './Cards.js';
 
-import './Kanban.css';
+import './Colunas.css';
 
 class Colunas extends Component {
     

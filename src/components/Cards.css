@@ -1,0 +1,24 @@
+.cartao{
+    border-radius: 3px;
+    display: inline-block;
+    border: solid;
+    margin: 1px;
+    min-width: 100px;
+    max-width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+    float: left;
+}
+.cartaoHead{
+    border-bottom: solid;
+    height: 50px;
+  
+}
+.cartaoHead h2{
+    font-size: 1em;
+    
+}
+
+.cartao p{
+    font-size: 0.6em;
+}

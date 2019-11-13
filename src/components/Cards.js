@@ -1,22 +1,9 @@
 import React, { Component } from 'react';
 
-import './Kanban.css';
+import './Cards.css';
 
 class Cards extends Component {
     
-    constructor(props){
-        super(props);
-        this.mouseIn = this.mouseIn.bind(this);
-		this.mouseOut = this.mouseOut.bind(this);
-
-    }
-    mouseIn(obj){
-        console.log("Hiago IN");
-    }
-
-    mouseOut(obj){
-        console.log("Hiago Out: ");
-    }
     render(){
         return(
             <div className="cartao" onMouseOver={this.mouseIn} onMouseOut={this.mouseOut} draggable={true}
